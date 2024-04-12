@@ -100,34 +100,34 @@ const AdminJsonGraph = () => {
       console.error("Error fetching Graph data:", error);
     }
   };
-  const fetchGraphData = async () => {
-    try {
-      if (localStorage.getItem("graphData")) {
-        setGraphData(JSON.parse(localStorage.getItem("graphData")));
-        return;
-      }
+  // const fetchGraphData = async () => {
+  //   try {
+  //     // if (localStorage.getItem("graphData")) {
+  //     //   setGraphData(JSON.parse(localStorage.getItem("graphData")));
+  //     //   return;
+  //     // }
 
-      setGraphLoading(true);
-      const response = await axios.get("/getGraph");
-      // console.log("Graph data fetched");
-      // console.log("before ", graphData);
-      console.log("Graph data fetched");
-      // console.log(response.data[1]);
-      setGraphData({ nodes: response.data[0], edges: response.data[1] });
-      localStorage.setItem(
-        "graphData",
-        JSON.stringify({ nodes: response.data[0], edges: response.data[1] })
-      );
+  //     setGraphLoading(true);
+  //     const response = await axios.get("/getGraph");
+  //     // console.log("Graph data fetched");
+  //     // console.log("before ", graphData);
+  //     console.log("Graph data fetched");
+  //     // console.log(response.data[1]);
+  //     setGraphData({ nodes: response.data[0], edges: response.data[1] });
+  //     localStorage.setItem(
+  //       "graphData",
+  //       JSON.stringify({ nodes: response.data[0], edges: response.data[1] })
+  //     );
 
-      setGraphLoading(false);
-    } catch (error) {
-      console.error("Error fetching Graph data:", error);
-    }
-  };
+  //     setGraphLoading(false);
+  //   } catch (error) {
+  //     console.error("Error fetching Graph data:", error);
+  //   }
+  // };
   // initially fetch the graph
   useEffect(() => {
     // console.log("Fetching graph data");
-    fetchGraphData();
+    fetchFreshGraphData();
   }, [jsonData]);
 
   const handleSaveJson = async () => {
@@ -230,6 +230,9 @@ const AdminJsonGraph = () => {
       stabilization: {
         enabled: true,
         iterations: 100,
+        updateInterval: 10,
+        onlyDynamicEdges: false,
+        fit: true,
       },
     },
   };
@@ -282,6 +285,7 @@ const AdminJsonGraph = () => {
         nodes: updatedNodes,
         edges: graphData.edges,
       });
+      localStorage.setItem("graphData", JSON.stringify(graphData));
       setGraphStabilising(false);
     },
   };
@@ -383,7 +387,7 @@ const AdminJsonGraph = () => {
           }
         >
           <div className="relative flex  items-center justify-center p-5 h-[86vh]">
-            {!graphLoading && !graphStabilising ? (
+            {!graphLoading ? (
               <>
                 <Badge variant="secondary" className="right-2 absolute top-2">
                   Knowledge Graph
@@ -417,20 +421,17 @@ const AdminJsonGraph = () => {
               </>
             ) : (
               <>
-                <Badge
-                  variant={"secondary"}
-                  className="animate-pulse  absolute right-3 top-4 "
-                >
+                <Badge variant={"secondary"} className="animate-pulse ">
                   Stabilising Graph
                 </Badge>
-                <Skeleton className="h-10 w-10 rounded-full bg-secondary" />
+                {/* <Skeleton className="h-10 w-10 rounded-full bg-secondary" />
                 <Skeleton className="h-10 w-10 rounded-full bg-secondary absolute bottom-4/5 left-2/3" />
                 <Skeleton className="h-10 w-10 rounded-full bg-secondary absolute top-1/3 right-1/3" />
                 <Skeleton className="h-10 w-10 rounded-full bg-secondary absolute top-1/4 right-1/2" />
                 <Skeleton className="h-10 w-10 rounded-full bg-secondary absolute top-2/3 left-1/2" />
                 <Skeleton className="h-10 w-10 rounded-full bg-secondary absolute top-1/4 right-1/4" />
                 <Skeleton className="h-10 w-10 rounded-full bg-secondary absolute top-3/4 left-3/4" />
-                <Skeleton className="h-10 w-10 rounded-full bg-secondary absolute top-4/5 left-4/5" />
+                <Skeleton className="h-10 w-10 rounded-full bg-secondary absolute top-4/5 left-4/5" /> */}
               </>
             )}
           </div>

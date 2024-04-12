@@ -159,34 +159,91 @@ export default function DailyAnalytics({ analyticsData }) {
       //     query[key] = (value / totalSum) * 100;
       //   });
       // });
+
+      // console.log("r1 ", dailyViolationCounts_Risk1);
+      // console.log("r2 ", dailyViolationCounts_Risk2);
+      // console.log("r3 ", dailyViolationCounts_Risk3);
+      // console.log("r4 ", dailyViolationCounts_Risk4);
+      // console.log("r5 ", dailyViolationCounts_Risk5);
+
+      const riskArray1 = Object.entries(dailyViolationCounts_Risk1);
+      const riskArray2 = Object.entries(dailyViolationCounts_Risk2);
+      const riskArray3 = Object.entries(dailyViolationCounts_Risk3);
+      const riskArray4 = Object.entries(dailyViolationCounts_Risk4);
+      const riskArray5 = Object.entries(dailyViolationCounts_Risk5);
+
+      // Sort the array based on keys (dates)
+      function compare(riskArray) {
+        riskArray.sort(([dateA], [dateB]) => {
+          return new Date(dateA) - new Date(dateB);
+        });
+        return riskArray;
+      }
+
+      // Convert the sorted array back to an object
+      const risk1 = {};
+      const risk2 = {};
+      const risk3 = {};
+      const risk4 = {};
+      const risk5 = {};
+
+      compare(riskArray1).forEach(([key, value]) => {
+        risk1[key] = value;
+      });
+
+      compare(riskArray2).forEach(([key, value]) => {
+        risk2[key] = value;
+      });
+
+      compare(riskArray3).forEach(([key, value]) => {
+        risk3[key] = value;
+      });
+
+      compare(riskArray4).forEach(([key, value]) => {
+        risk4[key] = value;
+      });
+      compare(riskArray5).forEach(([key, value]) => {
+        risk5[key] = value;
+      });
+
+      console.log("risk1 ", risk1);
+      console.log("risk2 ", risk2);
+      console.log("risk2 ", risk3);
+      console.log("risk2 ", risk4);
+      console.log("risk2 ", risk5);
       return {
-        dailyViolationCounts_Risk1,
-        dailyViolationCounts_Risk2,
-        dailyViolationCounts_Risk3,
-        dailyViolationCounts_Risk4,
-        dailyViolationCounts_Risk5,
+        risk1,
+        risk2,
+        risk3,
+        risk4,
+        risk5,
         // dailyViolationQueries,
       };
     };
 
     // Get the daily violation counts
     const {
-      dailyViolationCounts_Risk1,
-      dailyViolationCounts_Risk2,
-      dailyViolationCounts_Risk3,
-      dailyViolationCounts_Risk4,
-      dailyViolationCounts_Risk5,
+      risk1,
+      risk2,
+      risk3,
+      risk4,
+      risk5,
       // dailyViolationQueries,
     } = getDailyViolationCounts();
 
-    const labels = Object.keys(dailyViolationCounts_Risk1);
+    const labels = Object.keys(risk1);
+    // .map((date) => new Date(date).toISOString().split("T")[0])
+    // .sort((a, b) => new Date(a) - new Date(b));
+
+    // const labels = risk1;
+    // console.log(labels);
     // setCompDates(labels);
     // console.log(compdates);
-    const dataPoints_Risk1 = Object.values(dailyViolationCounts_Risk1);
-    const dataPoints_Risk2 = Object.values(dailyViolationCounts_Risk2);
-    const dataPoints_Risk3 = Object.values(dailyViolationCounts_Risk3);
-    const dataPoints_Risk4 = Object.values(dailyViolationCounts_Risk4);
-    const dataPoints_Risk5 = Object.values(dailyViolationCounts_Risk5);
+    const dataPoints_Risk1 = Object.values(risk1);
+    const dataPoints_Risk2 = Object.values(risk2);
+    const dataPoints_Risk3 = Object.values(risk3);
+    const dataPoints_Risk4 = Object.values(risk4);
+    const dataPoints_Risk5 = Object.values(risk5);
 
     // console.log(dataPoints);
     // setCompDates([...new Set(compdates)]);
