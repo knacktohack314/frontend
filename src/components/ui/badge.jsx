@@ -20,7 +20,7 @@ const badgeVariants = cva(
         warning:
           "border-transparent bg-yellow-400 text-black shadow hover:bg-yellow-500",
         critical:
-          "border-transparent bg-red-400 text-black shadow hover:bg-red-500",
+          "border-transparent  bg-[#FF0000] text-black shadow hover:bg-red-500",
         high: "border-transparent bg-orange-400 text-black shadow hover:bg-orange-500",
         medium:
           "border-transparent bg-yellow-400 text-black shadow hover:bg-yellow-500",
