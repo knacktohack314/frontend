@@ -26,10 +26,19 @@ export default function AdminRuleBookUpload() {
       });
 
       if (response.status === 200) {
-        toast({
-          variant: "success",
-          description: response.data,
-        });
+        console.log("uploaded");
+        if (response.data?.error) {
+          console.log(response.data.error);
+          toast({
+            variant: "destructive",
+            description: response.data.error,
+          });
+        } else {
+          toast({
+            variant: "success",
+            description: response.data,
+          });
+        }
       }
     } catch (err) {
       console.log(err);
