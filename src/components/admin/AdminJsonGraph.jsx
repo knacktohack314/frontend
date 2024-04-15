@@ -207,9 +207,12 @@ const AdminJsonGraph = () => {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="min-h-[60vh]  rounded-lg border "
+      className="min-h-[60vh]  rounded-lg border no-scrollbar"
     >
-      <ResizablePanel defaultSize={40} className="bg-black text-black ">
+      <ResizablePanel
+        defaultSize={40}
+        className="bg-black text-black no-scrollbar"
+      >
         {/* json component */}
 
         <div className="h-[86vh] relative flex">
@@ -284,7 +287,10 @@ const AdminJsonGraph = () => {
         </span>
       </span>
       {/* <ResizableHandle withHandle /> */}
-      <ResizablePanel className="bg-black relative  h-[86vh]" defaultSize={60}>
+      <ResizablePanel
+        className="bg-black relative  h-[86vh] no-scrollbar"
+        defaultSize={60}
+      >
         {/* graph component */}
 
         <Suspense

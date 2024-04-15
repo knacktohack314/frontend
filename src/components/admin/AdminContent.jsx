@@ -8,7 +8,7 @@ import { Badge } from "../ui/badge";
 export default function AdminContent() {
   return (
     <div className="flex flex-col bg-muted/50 overflow-y-scroll no-scrollbar">
-      <main className=" flex-1 gap-4 justify-center items-center  overflow-auto md:grid-cols-2 p-4 lg:grid-cols-2 ">
+      <main className=" flex-1 gap-4 justify-center items-center  overflow-auto md:grid-cols-2 p-4 lg:grid-cols-2 no-scrollbar">
         <Tabs defaultValue="json_graph">
           <TabsList className="flex w-fit mx-auto justify-between sticky top-1">
             <TabsTrigger value="json_graph" variant="primary">

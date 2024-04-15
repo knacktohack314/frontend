@@ -61,8 +61,8 @@ export default function UserWiseAnalytics({ analyticsData }) {
   };
 
   return (
-    <main className="overflow-y-scroll 2xl:w-[91vw] w-[87.2vw]  mx-auto ml-0 p-0">
-      <div className="mx-4  rounded-xl bg-black max-w-screen-3xl p-4 mt-4 md:p-6 2xl:p-6 h-[46vh] overflow-y-scroll  ">
+    <main className="overflow-y-scroll no-scrollbar 2xl:w-[91vw] w-[87.2vw]  mx-auto ml-0 p-0">
+      <div className="mx-4  rounded-xl bg-black max-w-screen-3xl p-4 mt-4 md:p-6 2xl:p-6 h-[46vh] overflow-y-scroll  no-scrollbar">
         <Table>
           <TableCaption>
             A list of users and the respective violations that they commited
@@ -157,7 +157,7 @@ export default function UserWiseAnalytics({ analyticsData }) {
                         //   axis: "y",
                         label: "Violations Done & their Counts",
                         data: Object.values(userTopViolations[selectedUserData])
-                          .sort((countA,  countB) => countB - countA)
+                          .sort((countA, countB) => countB - countA)
                           .slice(0, 5),
                         // 1, 2, 34,
 
@@ -226,7 +226,7 @@ export default function UserWiseAnalytics({ analyticsData }) {
                         //   axis: "y",
                         label: "Violation Count",
                         data: Object.values(userTopViolations[selectedUserData])
-                          .sort(( countA , countB) => countB - countA)
+                          .sort((countA, countB) => countB - countA)
                           .slice(0, 5)
                           .map((count) => {
                             const tot = Object.values(
