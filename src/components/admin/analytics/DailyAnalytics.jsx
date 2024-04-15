@@ -669,7 +669,7 @@ export default function DailyAnalytics({ analyticsData }) {
 
   Chart.register(...registerables);
   return (
-    <main className="overflow-y-scroll">
+    <main className="overflow-y-scroll  no-scrollbar">
       <div className="mx-auto max-w-screen-3xl p-4 md:p-6 2xl:p-4">
         {/* <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
           {Array.from({ length: 4 }).map((_, index) => (

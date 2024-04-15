@@ -70,7 +70,7 @@ export default function AdminAnalytics() {
 
   return (
     // <main className=" flex-1 flex-col gap-4 justify-center items-center  overflow-auto md:grid-cols-2 p-4 lg:grid-cols-2 border-2 border-primary">
-    <div className="flex w-full  justify-center items-center ">
+    <div className="flex w-full  no-scrollbar justify-center items-center ">
       <Tabs defaultValue="daily">
         <TabsList className="top-2 w-fit text-xs sticky">
           <TabsTrigger value="daily">Daily Analytics</TabsTrigger>

@@ -7,7 +7,7 @@ import { Badge } from "../ui/badge";
 
 export default function AdminPanel() {
   return (
-    <div className="grid h-screen w-full pl-[143px] ">
+    <div className="grid h-screen w-full pl-[143px]  no-scrollbar">
       <Suspense fallback={<Badge className="animate-pulse">Loading...</Badge>}>
         <AsideSection
           componentName={"Panel"}
