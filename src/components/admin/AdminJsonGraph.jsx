@@ -6,15 +6,19 @@ import {
 
 import Graph from "react-graph-vis";
 
+import { ForceGraph3D, ForceGraph2D } from "react-force-graph";
+
 import React, {
   Suspense,
   useEffect,
   useMemo,
   useState,
+  useRef,
   useCallback,
 } from "react";
 import { Button } from "../ui/button";
 import { JsonEditor } from "react-jsondata-editor";
+
 import { Badge } from "../ui/badge";
 import { ScrollArea } from "../ui/scroll-area";
 import { Skeleton } from "../ui/skeleton";
@@ -24,9 +28,24 @@ import axios from "@/api/axios";
 import { setJsonData } from "../../state/slices/jsonGraphSlice";
 import { Card, CardContent } from "../ui/card";
 
+// import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
+// import CellMeasurer from "react-virtualized/dist/commonjs/CellMeasurer";
+// import CellMeasurerCache from "react-virtualized/dist/commonjs/CellMeasurer/CellMeasurerCache";
+
+// import {
+//   Select,
+//   SelectContent,
+//   SelectGroup,
+//   SelectItem,
+//   SelectLabel,
+//   SelectTrigger,
+//   SelectValue,
+// } from "@/components/ui/select";
+
 const AdminJsonGraph = () => {
   // const [jsonData, setJsonData] = useState(JSON.stringify(null, " "));
   const [jsonLoading, setJsonLoading] = useState(false);
+  const [graphLevel, setGraphLevel] = useState(3);
   const [graphLoading, setGraphLoading] = useState(false);
 
   const [nodeInfo, setNodeInfo] = useState(null);
@@ -39,7 +58,7 @@ const AdminJsonGraph = () => {
 
   const [graphData, setGraphData] = useState({
     nodes: [],
-    edges: [],
+    links: [],
   });
   const fetchData = async () => {
     if (localStorage.getItem("jsonData")) {
@@ -50,7 +69,7 @@ const AdminJsonGraph = () => {
       setJsonLoading(true);
       const response = await axios.get("/getJson");
       console.log("JSN data fetched");
-      console.log(response.data[0]);
+
       // setJsonData(JSON.stringify(response.data));
       dispatch(setJsonData(JSON.stringify(response.data)));
       localStorage.setItem("jsonData", JSON.stringify(response.data));
@@ -88,11 +107,12 @@ const AdminJsonGraph = () => {
       // console.log("before ", graphData);
       console.log("Graph data fetched");
       console.log(response.data[0]);
-      setGraphData({ nodes: response.data[0], edges: response.data[1] });
-      console.log("graph Data ", graphData);
+      console.log(response.data[1]);
+      setGraphData({ nodes: response.data[0], links: response.data[1] });
+      // console.log("graph Data ", graphData);
       localStorage.setItem(
         "graphData",
-        JSON.stringify({ nodes: response.data[0], edges: response.data[1] })
+        JSON.stringify({ nodes: response.data[0], links: response.data[1] })
       );
 
       setGraphLoading(false);
@@ -100,34 +120,37 @@ const AdminJsonGraph = () => {
       console.error("Error fetching Graph data:", error);
     }
   };
-  // const fetchGraphData = async () => {
-  //   try {
-  //     // if (localStorage.getItem("graphData")) {
-  //     //   setGraphData(JSON.parse(localStorage.getItem("graphData")));
-  //     //   return;
-  //     // }
+  const fetchGraphData = async () => {
+    try {
+      if (localStorage.getItem("graphData")) {
+        setGraphData(JSON.parse(localStorage.getItem("graphData")));
+        return;
+      }
 
-  //     setGraphLoading(true);
-  //     const response = await axios.get("/getGraph");
-  //     // console.log("Graph data fetched");
-  //     // console.log("before ", graphData);
-  //     console.log("Graph data fetched");
-  //     // console.log(response.data[1]);
-  //     setGraphData({ nodes: response.data[0], edges: response.data[1] });
-  //     localStorage.setItem(
-  //       "graphData",
-  //       JSON.stringify({ nodes: response.data[0], edges: response.data[1] })
-  //     );
+      setGraphLoading(true);
+      const response = await axios.get("/getGraph");
+      // console.log("Graph data fetched");
+      // console.log("before ", graphData);
+      console.log("Graph data fetched");
+      // console.log(response.data[1]);
+      setGraphData({ nodes: response.data[0], links: response.data[1] });
+      localStorage.setItem(
+        "graphData",
+        JSON.stringify({ nodes: response.data[0], links: response.data[1] })
+      );
 
-  //     setGraphLoading(false);
-  //   } catch (error) {
-  //     console.error("Error fetching Graph data:", error);
-  //   }
-  // };
+      setGraphLoading(false);
+    } catch (error) {
+      console.error("Error fetching Graph data:", error);
+    }
+  };
   // initially fetch the graph
+
+  const cachedGraph = useMemo(() => graphData, [graphData]);
+
   useEffect(() => {
     // console.log("Fetching graph data");
-    fetchFreshGraphData();
+    fetchGraphData();
   }, [jsonData]);
 
   const handleSaveJson = async () => {
@@ -181,115 +204,6 @@ const AdminJsonGraph = () => {
     },
   };
 
-  const options = {
-    layout: {
-      hierarchical: false,
-    },
-    edges: {
-      color: "#fff",
-      smooth: {
-        type: "continuous",
-      },
-      font: {
-        size: 6,
-        color: "white",
-        align: "top",
-        vadjust: -2,
-        // strokeColor: "#000",
-        strokeWidth: 0,
-      },
-    },
-    autoResize: true,
-    nodes: {
-      widthConstraint: 100,
-      color: "#e53b5c",
-      shape: "dot",
-      opacity: 0.8,
-      font: {
-        size: 5,
-        color: "white",
-      },
-      mass: 2,
-    },
-    interaction: {
-      hover: true,
-      dragView: true,
-      dragNodes: true,
-      navigationButtons: true,
-      zoomView: true,
-      // keyboard: true,
-    },
-
-    physics: {
-      enabled: true,
-      // barnesHut: {
-      //   gravitationalConstant: -2000,
-      //   centralGravity: 0.9,
-      //   springLength: 35,
-      // },
-      stabilization: {
-        enabled: true,
-        iterations: 100,
-        updateInterval: 10,
-        onlyDynamicEdges: false,
-        fit: true,
-      },
-    },
-  };
-
-  const events = {
-    // hoverNode: ({ node }) => {
-    //   const updatedNodes = graphData.nodes.map((n) => {
-    //     if (n.id === node) {
-    //       console.log("node ", n);
-    //       setNodeInfo(n);
-    //       return { ...n, opacity: 1 }; // Set opacity to 1 for hovered node
-    //     }
-    //     return { ...n, opacity: 0.5 }; // Reduce opacity for other nodes
-    //   });
-    //   setGraphData({ ...graphData, nodes: updatedNodes });
-    // },
-
-    // blurNode: () => {
-    //   const updatedNodes = graphData.nodes.map((node) => ({
-    //     ...node,
-    //     opacity: 1,
-    //   }));
-    //   const updatedEdges = graphData.edges.map((edge) => ({
-    //     ...edge,
-    //     opacity: 1,
-    //   }));
-    //   setGraphData({ ...graphData, nodes: updatedNodes, edges: updatedEdges });
-    // },
-
-    stabilizationProgress: () => {
-      // setGraphStabilising(true);
-    },
-    stabilizationIterationsDone: () => {
-      const updatedNodes = graphData.nodes.map((node) => ({
-        ...node,
-        color: `${
-          node.risk === "critical"
-            ? "red"
-            : node.risk === "minimal"
-            ? "green"
-            : node.risk === "high"
-            ? "orange"
-            : node.risk === "medium"
-            ? "yellow"
-            : "#e53b5c"
-        }`,
-      }));
-      setGraphData({
-        ...graphData,
-        nodes: updatedNodes,
-        edges: graphData.edges,
-      });
-      localStorage.setItem("graphData", JSON.stringify(graphData));
-      setGraphStabilising(false);
-    },
-  };
-
   return (
     <ResizablePanelGroup
       direction="horizontal"
@@ -310,9 +224,10 @@ const AdminJsonGraph = () => {
               valueStyle={myStyle.valueStyle}
               keyStyle={myStyle.keyStyle}
               bannerStyle={myStyle.bannerStyle}
+              // className="truncate w-full h-full"
             />
           ) : (
-            <>
+            <div className="flex flex-col">
               <Badge
                 variant={"secondary"}
                 className="animate-pulse absolute top-4 "
@@ -332,7 +247,7 @@ const AdminJsonGraph = () => {
                   <Skeleton className="h-4 w-1/3 ml-20 " />
                 </div>
               ))}
-            </>
+            </div>
           )}
 
           {!jsonLoading && (
@@ -361,8 +276,14 @@ const AdminJsonGraph = () => {
         >
           Graph
         </Button>
+        <span className="flex gap-1 absolute top-4  left-36">
+          <Badge variant="critical"> Critical Risk</Badge>
+          <Badge variant="high"> High Risk</Badge>
+          <Badge variant="medium"> Medium Risk</Badge>
+          <Badge variant="minimal"> Minimal Risk</Badge>
+        </span>
       </span>
-      <ResizableHandle withHandle />
+      {/* <ResizableHandle withHandle /> */}
       <ResizablePanel className="bg-black relative  h-[86vh]" defaultSize={60}>
         {/* graph component */}
 
@@ -386,31 +307,54 @@ const AdminJsonGraph = () => {
             </>
           }
         >
-          <div className="relative flex  items-center justify-center p-5 h-[86vh]">
+          <div className="relative flex   items-center justify-center p-5 h-[86vh]">
             {!graphLoading ? (
               <>
                 <Badge variant="secondary" className="right-2 absolute top-2">
                   Knowledge Graph
                 </Badge>
 
-                <span className="flex gap-1 absolute top-2 opacity-70 left-1">
-                  <Badge variant="critical"> Critical Risk</Badge>
-                  <Badge variant="high"> High Risk</Badge>
-                  <Badge variant="medium"> Medium Risk</Badge>
-                  <Badge variant="minimal"> Minimal Risk</Badge>
-                </span>
+                {/* <span className="absolute top-2 right-2"></span> */}
 
-                <Graph
+                <ForceGraph3D
+                  graphData={cachedGraph}
+                  // nodeAutoColorBy="id"
+                  linkColor="black"
+                  
+                  nodeColor={(node) =>
+                    node?.risk === "critical"
+                      ? "red"
+                      : node?.risk === "minimal"
+                      ? "green"
+                      : node?.risk === "high"
+                      ? "orange"
+                      : node?.risk === "medium"
+                      ? "yellow"
+                      : "#e53b5c"
+                  }
+                  // backgroundColor="#aaa"
+                  linkWidth={2}
+                  nodeLabel={(node) => node.label}
+                  linkDirectionalParticles={3}
+
+                  // onNodeClick={node=> }
+                  // nodeColor={(node) =>
+                  //   highlightedNodes.includes(node) ? "red" : undefined
+                  // }
+                />
+
+                {/* <Graph
                   graph={graphData}
                   options={options}
                   events={events}
                   getNetwork={(network) => {
                     //  if you want access to vis.js network api you can set the state in a parent component using this property
-                    network.on("click", function () {
-                      network.fit();
-                    });
+                    // network.on("click", function () {
+                    //   network.fit();
+                    //   // network.collapse();
+                    // });
                   }}
-                />
+                /> */}
                 {/* {nodeInfo && (
                   <div className="absolute top-2 left-2 p-2 bg-secondary  rounded-lg">
                     <p className="text-white">

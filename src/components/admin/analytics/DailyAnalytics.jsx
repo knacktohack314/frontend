@@ -27,12 +27,15 @@ import { Bar, Line } from "react-chartjs-2";
 import { Chart, registerables } from "chart.js";
 import PercentViolationChart from "../charts/PercentViolationChart";
 import RiskBarChart from "../charts/RiskBarChart";
+import { useSelector } from "react-redux";
 
 export default function DailyAnalytics({ analyticsData }) {
   const [firstDate, setFirstDate] = useState(localStorage.getItem("firstDate"));
   const [secondDate, setSecondDate] = useState(
     localStorage.getItem("secondDate")
   );
+
+  const dateRange = useSelector((state) => state.dateRange);
 
   const [compdates, setCompDates] = useState([]);
 
@@ -41,17 +44,168 @@ export default function DailyAnalytics({ analyticsData }) {
   // cumulative violation in time interval
 
   const [cumulativeViolation, setCumulativeViolation] = useState({
-    labels: ["0", "1", "2", "3", "4", "5"],
+    labels: [
+      "2024-04-05",
+      "2024-04-06",
+      "2024-04-07",
+      "2024-04-08",
+      "2024-04-09",
+      "2024-04-10",
+      "2024-04-12",
+      "2024-04-13",
+      "2024-04-14",
+    ],
     datasets: [
       {
-        label: "Risk Counts ",
-        data: [5, 10, 3, 9, 4, 6],
-        backgroundColor: ["#E11D47"],
-        borderColor: "#E11D47",
-        borderWidth: 1,
+        fill: true,
+        label: "Risk Level1 Counts",
+        data: {
+          "2024-04-05": 0,
+          "2024-04-06": 0,
+          "2024-04-07": 0,
+          "2024-04-08": 0,
+          "2024-04-09": 0,
+          "2024-04-10": 0,
+          "2024-04-12": 2,
+          "2024-04-13": 2,
+          "2024-04-14": 0,
+        },
+        // backgroundColor: ["#3d9737"],
+        backgroundColor: ["#3d973780"],
+        borderColor: "#3d9737",
+        borderWidth: 2,
+      },
+      {
+        fill: true,
+        label: "Risk Level2 Counts",
+        data: {
+          "2024-04-05": 0,
+          "2024-04-06": 0,
+          "2024-04-07": 0,
+          "2024-04-08": 0,
+          "2024-04-09": 0,
+          "2024-04-10": 0,
+          "2024-04-12": 4,
+          "2024-04-13": 16,
+          "2024-04-14": 0,
+        },
+        // backgroundColor: ["#ffc407"],
+        backgroundColor: ["#ffc40780"],
+        borderColor: "#ffc407",
+        borderWidth: 2,
+      },
+      {
+        fill: true,
+        label: "Risk Level3 Counts",
+        data: {
+          "2024-04-05": 1,
+          "2024-04-06": 1,
+          "2024-04-07": 1,
+          "2024-04-08": 0,
+          "2024-04-09": 2,
+          "2024-04-10": 0,
+          "2024-04-12": 13,
+          "2024-04-13": 33,
+          "2024-04-14": 1,
+        },
+        // backgroundColor: ["#ff7505"],
+        backgroundColor: ["#ff750580"],
+        borderColor: "#ff7505",
+        borderWidth: 2,
+      },
+      {
+        fill: true,
+        label: "Risk Level4 Counts",
+        data: {
+          "2024-04-05": 2,
+          "2024-04-06": 0,
+          "2024-04-07": 0,
+          "2024-04-08": 1,
+          "2024-04-09": 2,
+          "2024-04-10": 0,
+          "2024-04-12": 2,
+          "2024-04-13": 31,
+          "2024-04-14": 1,
+        },
+        // backgroundColor: ["#f52505"],
+        backgroundColor: ["#f5250580"],
+        borderColor: "#f52505",
+        borderWidth: 2,
+      },
+      {
+        fill: true,
+        label: "Risk Level5 Counts",
+        data: {
+          "2024-04-05": 0,
+          "2024-04-06": 0,
+          "2024-04-07": 0,
+          "2024-04-08": 0,
+          "2024-04-09": 0,
+          "2024-04-10": 0,
+          "2024-04-12": 0,
+          "2024-04-13": 0,
+          "2024-04-14": 0,
+        },
+        // backgroundColor: ["#b20303"],
+        backgroundColor: ["#b2030380"],
+        borderColor: "#b20303",
+        borderWidth: 2,
       },
     ],
   });
+
+  // const [cumulativeViolation, setCumulativeViolation] = useState({
+  //   labels: ["2024-04-05", "2024-04-06", "2024-04-07", "2024-04-08"],
+  //   datasets: [
+  //     {
+  //       fill: true,
+  //       label: "Risk Level1 Counts",
+  //       data: [0, 0, 0, 0],
+  //       // backgroundColor: ["#3d9737"],
+  //       backgroundColor: ["#3d973780"],
+  //       borderColor: "#3d9737",
+  //       borderWidth: 2,
+  //     },
+  //     {
+  //       fill: true,
+  //       label: "Risk Level2 Counts",
+  //       data: [0, 0, 0, 0],
+  //       // backgroundColor: ["#ffc407"],
+  //       backgroundColor: ["#ffc40780"],
+  //       borderColor: "#ffc407",
+  //       borderWidth: 2,
+  //     },
+  //     {
+  //       fill: true,
+  //       label: "Risk Level3 Counts",
+  //       data: [1, 1, 1, 0],
+  //       // backgroundColor: ["#ff7505"],
+  //       backgroundColor: ["#ff750580"],
+  //       borderColor: "#ff7505",
+  //       borderWidth: 2,
+  //     },
+  //     {
+  //       fill: true,
+  //       label: "Risk Level4 Counts",
+
+  //       data: [2, 0, 0, 1],
+  //       // backgroundColor: ["#f52505"],
+  //       backgroundColor: ["#f5250580"],
+  //       borderColor: "#f52505",
+
+  //       borderWidth: 2,
+  //     },
+  //     {
+  //       fill: true,
+  //       label: "Risk Level5 Counts",
+  //       data: [0, 0, 0, 0],
+  //       // backgroundColor: ["#b20303"],
+  //       backgroundColor: ["#b2030380"],
+  //       borderColor: "#b20303",
+  //       borderWidth: 2,
+  //     },
+  //   ]
+  // });
 
   const [highlev_violation, setHighlev_violation] = useState({
     labels: ["0", "1", "2", "3", "4", "5"],
@@ -84,69 +238,73 @@ export default function DailyAnalytics({ analyticsData }) {
 
         const day = entry.date_time.split(" ")[0]; // Extracting the date in 'YYYY-MM-DD' format
 
-        // Increment the count for the corresponding day
+        // console.log("daterange ", dateRange);
 
-        // if (Object.keys(entry["High level violations"]).length > 0) {
-        //   dailyViolationCounts[day]++;
-        // }
+        if (day >= dateRange?.from && day <= dateRange?.to) {
+          // Increment the count for the corresponding day
 
-        if (Object.keys(entry["High level violations"]).length > 0) {
-          setCompDates((prev) => {
-            return [...new Set([...prev, day])];
-          });
+          // if (Object.keys(entry["High level violations"]).length > 0) {
+          //   dailyViolationCounts[day]++;
+          // }
+
+          if (Object.keys(entry["High level violations"]).length > 0) {
+            setCompDates((prev) => {
+              return [...new Set([...prev, day])];
+            });
+          }
+
+          dailyViolationCounts_Risk1[day] =
+            Object.keys(entry["High level violations"]).length > 0
+              ? entry.risk == 1
+                ? (dailyViolationCounts_Risk1[day] || 0) + 1
+                : dailyViolationCounts_Risk1[day] || 0
+              : dailyViolationCounts_Risk1[day] || 0;
+
+          dailyViolationCounts_Risk2[day] =
+            Object.keys(entry["High level violations"]).length > 0
+              ? entry.risk == 2
+                ? (dailyViolationCounts_Risk2[day] || 0) + 1
+                : dailyViolationCounts_Risk2[day] || 0
+              : dailyViolationCounts_Risk2[day] || 0;
+
+          dailyViolationCounts_Risk3[day] =
+            Object.keys(entry["High level violations"]).length > 0
+              ? entry.risk == 3
+                ? (dailyViolationCounts_Risk3[day] || 0) + 1
+                : dailyViolationCounts_Risk3[day] || 0
+              : dailyViolationCounts_Risk3[day] || 0;
+
+          dailyViolationCounts_Risk4[day] =
+            Object.keys(entry["High level violations"]).length > 0
+              ? entry.risk == 4
+                ? (dailyViolationCounts_Risk4[day] || 0) + 1
+                : dailyViolationCounts_Risk4[day] || 0
+              : dailyViolationCounts_Risk4[day] || 0;
+
+          dailyViolationCounts_Risk5[day] =
+            Object.keys(entry["High level violations"]).length > 0
+              ? entry.risk == 5
+                ? (dailyViolationCounts_Risk5[day] || 0) + 1
+                : dailyViolationCounts_Risk5[day] || 0
+              : dailyViolationCounts_Risk5[day] || 0;
+
+          // Object.entries(entry["High level violations"]).forEach(([query, messages]) => {
+          //   //write code  for the days store the query and its count
+
+          //   //  TODO: implement this where we store x axis values are the days and the y axis values are the query and its count in stack bar chart
+
+          //   if (!dailyViolationQueries[day]) {
+          //     dailyViolationQueries[day] = { [query]: 1 };
+          //   } else {
+          //     if (dailyViolationQueries[day][query]) {
+          //       dailyViolationQueries[day][query] += 1;
+          //     } else {
+          //       dailyViolationQueries[day][query] = 1;
+          //     }
+          //     // dailyViolationQueries[query][day] || 0 + 1;
+          //   }
+          // });
         }
-
-        dailyViolationCounts_Risk1[day] =
-          Object.keys(entry["High level violations"]).length > 0
-            ? entry.risk == 1
-              ? (dailyViolationCounts_Risk1[day] || 0) + 1
-              : dailyViolationCounts_Risk1[day] || 0
-            : dailyViolationCounts_Risk1[day] || 0;
-
-        dailyViolationCounts_Risk2[day] =
-          Object.keys(entry["High level violations"]).length > 0
-            ? entry.risk == 2
-              ? (dailyViolationCounts_Risk2[day] || 0) + 1
-              : dailyViolationCounts_Risk2[day] || 0
-            : dailyViolationCounts_Risk2[day] || 0;
-
-        dailyViolationCounts_Risk3[day] =
-          Object.keys(entry["High level violations"]).length > 0
-            ? entry.risk == 3
-              ? (dailyViolationCounts_Risk3[day] || 0) + 1
-              : dailyViolationCounts_Risk3[day] || 0
-            : dailyViolationCounts_Risk3[day] || 0;
-
-        dailyViolationCounts_Risk4[day] =
-          Object.keys(entry["High level violations"]).length > 0
-            ? entry.risk == 4
-              ? (dailyViolationCounts_Risk4[day] || 0) + 1
-              : dailyViolationCounts_Risk4[day] || 0
-            : dailyViolationCounts_Risk4[day] || 0;
-
-        dailyViolationCounts_Risk5[day] =
-          Object.keys(entry["High level violations"]).length > 0
-            ? entry.risk == 5
-              ? (dailyViolationCounts_Risk5[day] || 0) + 1
-              : dailyViolationCounts_Risk5[day] || 0
-            : dailyViolationCounts_Risk5[day] || 0;
-
-        // Object.entries(entry["High level violations"]).forEach(([query, messages]) => {
-        //   //write code  for the days store the query and its count
-
-        //   //  TODO: implement this where we store x axis values are the days and the y axis values are the query and its count in stack bar chart
-
-        //   if (!dailyViolationQueries[day]) {
-        //     dailyViolationQueries[day] = { [query]: 1 };
-        //   } else {
-        //     if (dailyViolationQueries[day][query]) {
-        //       dailyViolationQueries[day][query] += 1;
-        //     } else {
-        //       dailyViolationQueries[day][query] = 1;
-        //     }
-        //     // dailyViolationQueries[query][day] || 0 + 1;
-        //   }
-        // });
       });
 
       // console.log("dai ", dailyViolationQueries);
@@ -255,40 +413,45 @@ export default function DailyAnalytics({ analyticsData }) {
           fill: true,
           label: "Risk Level1 Counts",
           data: dataPoints_Risk1,
-          backgroundColor: ["#E11D4730"],
-          borderColor: "#E11D47",
+          // backgroundColor: ["#3d9737"],
+          backgroundColor: ["#3d973780"],
+          borderColor: "#3d9737",
           borderWidth: 2,
         },
         {
           fill: true,
           label: "Risk Level2 Counts",
           data: dataPoints_Risk2,
-          backgroundColor: ["rgba(0, 0, 255, 0.2)"],
-          borderColor: "blue",
+          // backgroundColor: ["#ffc407"],
+          backgroundColor: ["#ffc40780"],
+          borderColor: "#ffc407",
           borderWidth: 2,
         },
         {
           fill: true,
           label: "Risk Level3 Counts",
           data: dataPoints_Risk3,
-          backgroundColor: ["rgba(0, 255, 0, 0.2)"],
-          borderColor: "green",
+          // backgroundColor: ["#ff7505"],
+          backgroundColor: ["#ff750580"],
+          borderColor: "#ff7505",
           borderWidth: 2,
         },
         {
           fill: true,
           label: "Risk Level4 Counts",
           data: dataPoints_Risk4,
-          backgroundColor: ["rgba(255, 0, 0, 0.2)"],
-          borderColor: "red",
+          // backgroundColor: ["#f52505"],
+          backgroundColor: ["#f5250580"],
+          borderColor: "#f52505",
           borderWidth: 2,
         },
         {
           fill: true,
           label: "Risk Level5 Counts",
           data: dataPoints_Risk5,
-          backgroundColor: ["rgba(255, 0, 255, 0.2)"],
-          borderColor: "purple",
+          // backgroundColor: ["#b20303"],
+          backgroundColor: ["#b2030380"],
+          borderColor: "#b20303",
           borderWidth: 2,
         },
       ],
@@ -334,7 +497,7 @@ export default function DailyAnalytics({ analyticsData }) {
     // });
 
     // })
-  }, [analyticsData]);
+  }, [analyticsData, dateRange]);
 
   const lineOptions = {
     responsive: true,
@@ -371,17 +534,26 @@ export default function DailyAnalytics({ analyticsData }) {
       );
     });
 
+    console.log("*************");
     console.log(
       dailyViolationQueries[firstDate],
       dailyViolationQueries[secondDate]
     );
+    console.log("*************");
 
     // console.log(Object.keys(dailyViolationQueries[firstDate]));
     // console.log(Object.values(dailyViolationQueries[firstDate]));
 
-    console.log(
-      Object.keys(dailyViolationQueries[firstDate]),
-      dailyViolationQueries[secondDate]
+    dailyViolationQueries[firstDate] = Object.fromEntries(
+      Object.entries(dailyViolationQueries[firstDate])
+        .sort(([, countA], [, countB]) => countB - countA)
+        .slice(0, 5)
+    );
+
+    dailyViolationQueries[secondDate] = Object.fromEntries(
+      Object.entries(dailyViolationQueries[secondDate])
+        .sort(([, countA], [, countB]) => countB - countA)
+        .slice(0, 5)
     );
 
     Object.entries(dailyViolationQueries).forEach(([date, query]) => {
@@ -394,6 +566,13 @@ export default function DailyAnalytics({ analyticsData }) {
       });
     });
 
+    //  console.log(
+    //    topViolationsFirstDate,
+    //     topViolationsSecondDate
+    //    // .sort(([, countA], [, countB]) => countB - countA)
+    //    // .slice(0, 5)
+    //  );
+
     const categories = [
       ...new Set(
         Object.keys(dailyViolationQueries[firstDate]).concat(
@@ -405,15 +584,36 @@ export default function DailyAnalytics({ analyticsData }) {
 
     console.log("Categories ", categories);
 
-    function getRandomColor() {
-      let color =
-        "#" + Math.floor(Math.random() * 16777215).toString(16) + "70";
-      return color;
-    }
+    // function getRandomColor() {
+    //   // borderColor: ["#3d9737", "#ffc407", "#ff7505", "#f52505", "#b20303"],
+    //   const color =
+    //     backgroundColor[Math.floor(Math.random() * backgroundColor.length)];
+    //   console.log(color);
+    //   return color;
+    // }
     // Initialize dataset array
 
     // console.log("categories ", categories);
-
+    const backgroundColor = [
+      "#a775dd",
+      "#5ba8d4",
+      "#69d66d",
+      "#ffb854",
+      "#f66332",
+      "#003f5c",
+      "#2f4b7c",
+      "#665191",
+      "#a05195",
+      "#d45087",
+      "#f95d6a",
+      "#ff7c43",
+      "#ffa600",
+    ];
+    const categoryColors = {};
+    categories.forEach((label, index) => {
+      categoryColors[label] = backgroundColor[index % backgroundColor.length];
+    });
+    console.log("categoryColors", categoryColors);
     const datasets = categories.map((category) => {
       const values = [firstDate, secondDate].map(
         (date) => dailyViolationQueries[date][category] || 0
@@ -426,8 +626,9 @@ export default function DailyAnalytics({ analyticsData }) {
       return {
         label: category,
         data: values,
-        backgroundColor: getRandomColor(),
-        borderColor: "#E11D47",
+
+        backgroundColor: categoryColors[category] + "A0",
+        borderColor: categoryColors[category],
         borderWidth: 1,
       };
     });

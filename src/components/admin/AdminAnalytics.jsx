@@ -4,47 +4,137 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "@/api/axios";
 import { setAnalyticsData } from "@/state/slices/analyticsSlice";
 import UserWiseAnalytics from "./UserWiseAnalytics";
-import SixHourAnalysis from "./analytics/SixHourAnalysis";
 import DailyAnalytics from "./analytics/DailyAnalytics";
+
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { addDays, format } from "date-fns";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { setDateRange } from "@/state/slices/dateRangeSlice";
+
 export default function AdminAnalytics() {
   const dispatch = useDispatch();
   const analyticsData = useSelector(
     (state) => state.analyticsData.analyticsData
   );
 
+  const [date, setDate] = useState({
+    from: new Date(2024, 3, 1),
+    to: addDays(new Date(2024, 3, 1), 20),
+  });
+
+  const handleSetDateRange = () => {
+    const from = format(date.from, "yyyy-MM-dd");
+    const to = date.to ? format(date.to, "yyyy-MM-dd") : from;
+    // console.log(from, to);
+
+    dispatch(setDateRange({ from, to }));
+  };
+
   // fetch the data here
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const response = await axios.get("/analytics");
+  //     // console.log(response.data);
+  //     dispatch(setAnalyticsData(response.data));
+  //     localStorage.setItem("analyticsData", JSON.stringify(response.data));
+  //   };
+
+  //   // if (!localStorage.getItem("analyticsData"))
+  //   fetchData();
+  // }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("/analytics");
-      console.log(response.data);
       dispatch(setAnalyticsData(response.data));
       localStorage.setItem("analyticsData", JSON.stringify(response.data));
     };
 
-    fetchData();
-  }, [dispatch]);
+    // Check if data is already fetched from localStorage
+    const cachedData = localStorage.getItem("analyticsData");
+    if (!analyticsData && cachedData) {
+      dispatch(setAnalyticsData(JSON.parse(cachedData)));
+    } else {
+      fetchData();
+    }
+  }, []);
 
   return (
     // <main className=" flex-1 flex-col gap-4 justify-center items-center  overflow-auto md:grid-cols-2 p-4 lg:grid-cols-2 border-2 border-primary">
-    <Tabs defaultValue="daily">
-      <TabsList className="top-2 w-fit text-xs sticky">
-        <TabsTrigger value="daily">Daily Analytics</TabsTrigger>
-        {/* <TabsTrigger value="six_hrs" variant="primary">
+    <div className="flex w-full">
+      <Tabs defaultValue="daily">
+        <TabsList className="top-2 w-fit text-xs sticky">
+          <TabsTrigger value="daily">Daily Analytics</TabsTrigger>
+          {/* <TabsTrigger value="six_hrs" variant="primary">
           6 hrs Analytics
         </TabsTrigger> */}
-        <TabsTrigger value="userwise">User Wise Analysis</TabsTrigger>
-      </TabsList>
-      {/* <TabsContent value="six_hrs">
+          <TabsTrigger value="userwise">User Wise Analysis</TabsTrigger>
+        </TabsList>
+        {/* <TabsContent value="six_hrs">
         <SixHourAnalysis analyticsData={analyticsData} />
       </TabsContent> */}
-      <TabsContent value="daily">
-        <DailyAnalytics analyticsData={analyticsData} />
-      </TabsContent>
-      <TabsContent value="userwise">
-        <UserWiseAnalytics analyticsData={analyticsData} />
-      </TabsContent>
-    </Tabs>
+        <TabsContent value="daily">
+          <DailyAnalytics analyticsData={analyticsData} />
+        </TabsContent>
+        <TabsContent value="userwise">
+          <UserWiseAnalytics analyticsData={analyticsData} />
+          {/* <UserWiseAnalytics /> */}
+        </TabsContent>
+      </Tabs>
+
+      <div className={`absolute top-14  right-10 space-x-2 items-center`}>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              id="date"
+              variant={"outline"}
+              className={cn(
+                "w-[300px] justify-start text-left font-normal",
+                !date && "text-muted-foreground"
+              )}
+              value={date}
+              onClick={(value) => setDate(value)}
+            >
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {date?.from ? (
+                date.to ? (
+                  <>
+                    {format(date.from, "LLL dd, y")} -{" "}
+                    {format(date.to, "LLL dd, y")}
+                  </>
+                ) : (
+                  format(date.from, "LLL dd, y")
+                )
+              ) : (
+                <span>Pick a date range</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0" align="start">
+            <Calendar
+              initialFocus
+              mode="range"
+              defaultMonth={date?.from}
+              selected={date}
+              onSelect={setDate}
+              numberOfMonths={2}
+            />
+          </PopoverContent>
+        </Popover>
+        <Button className="text-xs space-x-2" onClick={handleSetDateRange}>
+          Set Date
+        </Button>
+      </div>
+    </div>
     // </main>
   );
 }

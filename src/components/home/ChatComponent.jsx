@@ -90,7 +90,7 @@ export default function ChatComponent() {
         ).map(([category, items]) => {
           console.log(category, items);
           return items.map((item, index) => (
-            <div key={item} className="flex flex-col gap-2  justify-evenly">
+            <div key={item} className="flex flex-col gap-2 flex-wrap justify-evenly">
               <Badge
                 key={`${category}-${index}-0`}
                 variant="destructive"
@@ -253,7 +253,7 @@ export default function ChatComponent() {
                 disabled={loading || query === ""}
               >
                 {loading ? (
-                  <Loader className="size-3.5" />
+                  <Loader className="size-3.5 animate-spin" />
                 ) : (
                   <ArrowUp className="size-3.5" />
                 )}

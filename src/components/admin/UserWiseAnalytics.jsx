@@ -37,17 +37,19 @@ export default function UserWiseAnalytics({ analyticsData }) {
       (userViolationCounts[username] || 0) + (violationCount > 0 ? 1 : 0);
 
     // Update top violations for the user
-    Object.entries(item["High level violations"]).forEach(([query, messages]) => {
-      if (!userTopViolations[username]) {
-        userTopViolations[username] = { [query]: 1 };
-      } else {
-        if (userTopViolations[username][query]) {
-          userTopViolations[username][query] += 1;
+    Object.entries(item["High level violations"]).forEach(
+      ([query, messages]) => {
+        if (!userTopViolations[username]) {
+          userTopViolations[username] = { [query]: 1 };
         } else {
-          userTopViolations[username][query] = 1;
+          if (userTopViolations[username][query]) {
+            userTopViolations[username][query] += 1;
+          } else {
+            userTopViolations[username][query] = 1;
+          }
         }
       }
-    });
+    );
   });
 
   const handleRowClick = (username) => {
@@ -59,8 +61,8 @@ export default function UserWiseAnalytics({ analyticsData }) {
   };
 
   return (
-    <main className="overflow-y-scroll">
-      <div className="mx-10  rounded-xl bg-black max-w-screen-3xl p-4 mt-4 md:p-6 2xl:p-6 h-[46vh] overflow-y-scroll  ">
+    <main className="overflow-y-scroll 2xl:w-[91vw] w-[87.2vw]  mx-auto ml-0 p-0">
+      <div className="mx-4  rounded-xl bg-black max-w-screen-3xl p-4 mt-4 md:p-6 2xl:p-6 h-[46vh] overflow-y-scroll  ">
         <Table>
           <TableCaption>
             A list of users and the respective violations that they commited
@@ -130,7 +132,7 @@ export default function UserWiseAnalytics({ analyticsData }) {
         </Table>
       </div>
       {selectedUserData && (
-        <div className="mx-10 grid grid-cols-1 xl:grid-cols-2 gap-4  rounded-xl  max-w-screen-3xl  mt-4   ">
+        <div className="mx-4 grid grid-cols-1 xl:grid-cols-2 gap-4  rounded-xl  max-w-screen-3xl  mt-4   ">
           <div className="col-span-1 rounded-xl  bg-black  shadow-default   sm:px-7.5 xl:col-span-1">
             <Card className="bg-black text-white border-none">
               <CardHeader>
@@ -145,28 +147,29 @@ export default function UserWiseAnalytics({ analyticsData }) {
               <CardContent className="h-72 ">
                 <Bar
                   data={{
-                    labels: Object.entries(
-                      userTopViolations[selectedUserData]
-                    ).map(([query, count]) => query),
+                    labels: Object.entries(userTopViolations[selectedUserData])
+                      .sort(([, countA], [, countB]) => countB - countA)
+                      .slice(0, 5)
+                      .map(([query, count]) => query),
 
                     datasets: [
                       {
                         //   axis: "y",
                         label: "Violations Done & their Counts",
-                        data: Object.values(
-                          userTopViolations[selectedUserData]
-                        ),
+                        data: Object.values(userTopViolations[selectedUserData])
+                          .sort((countA,  countB) => countB - countA)
+                          .slice(0, 5),
                         // 1, 2, 34,
 
                         backgroundColor: [
-                          "rgba(225, 29, 71,0.4)",
-                          "rgba(255, 99, 132,0.4)",
-                          "rgba(255, 159, 64,0.4)",
-                          "rgba(255, 205, 86,0.4)",
-                          "rgba(75, 192, 192,0.4)",
-                          "rgba(54, 162, 235,0.4)",
-                          "rgba(153, 102, 255,0.4)",
-                          "rgba(201, 203, 207,0.4)",
+                          "rgba(225, 29, 71,0.5)",
+                          "rgba(255, 99, 132,0.5)",
+                          "rgba(255, 159, 64,0.5)",
+                          "rgba(255, 205, 86,0.5)",
+                          "rgba(75, 192, 192,0.5)",
+                          "rgba(54, 162, 235,0.5)",
+                          "rgba(153, 102, 255,0.5)",
+                          "rgba(201, 203, 207,0.5)",
                         ],
                         borderColor: [
                           "#E11D47",
@@ -213,33 +216,35 @@ export default function UserWiseAnalytics({ analyticsData }) {
               <CardContent className="h-72 ">
                 <Pie
                   data={{
-                    labels: Object.entries(
-                      userTopViolations[selectedUserData]
-                    ).map(([query, count]) => query),
+                    labels: Object.entries(userTopViolations[selectedUserData])
+                      .sort(([, countA], [, countB]) => countB - countA)
+                      .slice(0, 5)
+                      .map(([query, count]) => query),
 
                     datasets: [
                       {
                         //   axis: "y",
                         label: "Violation Count",
-                        data: Object.values(
-                          userTopViolations[selectedUserData]
-                        ).map((count) => {
-                          const tot = Object.values(
-                            userTopViolations[selectedUserData]
-                          ).reduce((a, b) => a + b, 0);
-                          return ((count / tot) * 100).toFixed(1);
-                        }),
+                        data: Object.values(userTopViolations[selectedUserData])
+                          .sort(( countA , countB) => countB - countA)
+                          .slice(0, 5)
+                          .map((count) => {
+                            const tot = Object.values(
+                              userTopViolations[selectedUserData]
+                            ).reduce((a, b) => a + b, 0);
+                            return ((count / tot) * 100).toFixed(1);
+                          }),
                         // 1, 2, 34,
 
                         backgroundColor: [
-                          "rgba(225, 29, 71,0.4)",
-                          "rgba(255, 99, 132,0.4)",
-                          "rgba(255, 159, 64,0.4)",
-                          "rgba(255, 205, 86,0.4)",
-                          "rgba(75, 192, 192,0.4)",
-                          "rgba(54, 162, 235,0.4)",
-                          "rgba(153, 102, 255,0.4)",
-                          "rgba(201, 203, 207,0.4)",
+                          "rgba(225, 29, 71,0.5)",
+                          "rgba(255, 99, 132,0.5)",
+                          "rgba(255, 159, 64,0.5)",
+                          "rgba(255, 205, 86,0.5)",
+                          "rgba(75, 192, 192,0.5)",
+                          "rgba(54, 162, 235,0.5)",
+                          "rgba(153, 102, 255,0.5)",
+                          "rgba(201, 203, 207,0.5)",
                         ],
                         borderColor: [
                           "rgba(225, 29, 71)",
@@ -263,7 +268,7 @@ export default function UserWiseAnalytics({ analyticsData }) {
                     // indexAxis: "y",
                     plugins: {
                       datalabels: {
-                        color: "#ffffff60",
+                        color: "#ffffffa0",
                       },
                     },
                   }}

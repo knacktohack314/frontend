@@ -20,16 +20,16 @@ const PercentViolationChart = () => {
   const analyticsData = useSelector(
     (state) => state.analyticsData.analyticsData
   );
-  const [numberViolations, setNumberViolations] = useState(0);
+  const [numberViolations, setNumberViolations] = useState(null);
 
   // Percentage of violations in pie chart
   const [percentageChartData, setPercentageChartData] = useState({
     labels: ["Violations", "No Violations"],
     datasets: [
       {
-        data: localStorage.getItem("pie_percent_data") || [],
-        backgroundColor: ["#E11D47"],
-        borderColor: "#E11D47",
+        data: [58.38,41.62],
+        backgroundColor: ["#b2030380", "#3d973780"],
+        borderColor: ["#b20303", "#3d9737"],
         borderWidth: 1,
       },
     ],
@@ -59,8 +59,8 @@ const PercentViolationChart = () => {
       datasets: [
         {
           data: [violationsPercentage, noViolationsPercentage],
-          backgroundColor: ["#E11D4780", "#1DE18970"],
-          borderColor: ["#E11D47", "#1DE189"],
+          backgroundColor: ["#b2030380", "#3d973780"],
+          borderColor: ["#b20303", "#3d9737"],
           borderWidth: 1,
         },
       ],
@@ -95,7 +95,7 @@ const PercentViolationChart = () => {
           <CardTitle className="text-white">
             Overall Percentage of Messages with Violations for all time -
             <span className="text-primary ml-2 text-xl">
-              {numberViolations.toFixed(2)}%
+              {numberViolations===null?"58.38": numberViolations.toFixed(2)}%
             </span>
           </CardTitle>
           <CardDescription>

@@ -49,7 +49,7 @@ export default function AdminRuleBookUpload() {
       />
 
       <div className="flex justify-end  items-center w-1/3 gap-1  float-end border p-2 rounded-lg bg-black">
-        <h2 className="text-sm text-center w-1/2">Upload a Rule Book</h2>
+        <h2 className="text-sm text-center w-1/2">Upload RuleBook</h2>
         <Input
           className="w-1/2"
           placeholder="Enter file name"
@@ -57,7 +57,7 @@ export default function AdminRuleBookUpload() {
           onChange={(e) => setFileName(e.target.value)}
         />
         <Button
-          className="w-1/2 disabled:cursor-not-allowed disabled:bg-gray-500"
+          className="w-1/2  disabled:bg-primary disabled:cursor-not-allowed"
           size="sm"
           type="button"
           onClick={() => fileInputRef.current.click()}
