@@ -156,7 +156,7 @@ export default function ChatComponent() {
             fallback={<Badge className="animate-pulse">Loading...</Badge>}
           > */}
           <ScrollArea className="h-[75vh]">
-            <div className="flex flex-col gap-3 p-3 overflow-y-scroll no-scrollbar">
+            <div className="flex flex-col gap-3 p-3 overflow-y-scroll ">
               {chatLogs.length === 0 && (
                 <div className="flex flex-col justify-center items-center gap-4">
                   <p className="text-4xl text-center">

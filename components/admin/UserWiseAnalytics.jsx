@@ -61,56 +61,57 @@ export default function UserWiseAnalytics({ analyticsData }) {
   };
 
   return (
-    <main className="overflow-y-scroll no-scrollbar 2xl:w-[91vw] w-[87.2vw]  mx-auto ml-0 p-0">
-      <div className="mx-4  rounded-xl bg-black max-w-screen-3xl p-4 mt-4 md:p-6 2xl:p-6 h-[46vh] overflow-y-scroll  no-scrollbar">
-        <Table>
-          <TableCaption>
-            A list of users and the respective violations that they commited
-          </TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[200px]">UserName</TableHead>
-              <TableHead className="w-[200px]">Violation Count</TableHead>
-              <TableHead className="text-right">Top 5 Violations </TableHead>
-              {/* <TableHead>Query which has most violated</TableHead> */}
-              {/* <TableHead className="text-right">Corresponding Query</TableHead> */}
-              {/* <TableHead className="text-right">Amount</TableHead> */}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {
-              // Loop through the userViolationCounts object to display the data
-              Object.entries(userViolationCounts).map(([username, count]) => (
-                <TableRow
-                  key={username}
-                  onClick={() => handleRowClick(username)}
-                  className="cursor-pointer"
-                >
-                  <TableCell className="font-medium">{username}</TableCell>
-                  <TableCell>{count}</TableCell>
-                  <TableCell className="text-right">
-                    {userTopViolations[username] ? (
-                      <ul>
-                        {Object.entries(userTopViolations[username])
-                          .sort((a, b) => b[1] - a[1])
-                          .slice(0, 5)
-                          .map(([query, count]) => (
-                            <li key={query}>
-                              {query}: {count}
-                            </li>
-                          ))}
-                      </ul>
-                    ) : (
-                      "N/A"
-                    )}
-                  </TableCell>
-                  {/* <TableCell className="text-right">
+    <main className="no-scrollbar  mx-auto max-w-screen-3xl p-4 md:p-6 2xl:p-4">
+      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-0 md:gap-6 2xl:mt-7.5 2xl:gap-7.5 max-w-screen-3xl mx-4">
+        <div className=" col-span-12 rounded-xl  bg-black  shadow-default  sm:px-7.5 xl:col-span-12 h-[45vh] overflow-y-scroll   p-5">
+          <Table>
+            <TableCaption>
+              A list of users and the respective violations that they commited
+            </TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[200px]">UserName</TableHead>
+                <TableHead className="w-[200px]">Violation Count</TableHead>
+                <TableHead className="text-right">Top 5 Violations </TableHead>
+                {/* <TableHead>Query which has most violated</TableHead> */}
+                {/* <TableHead className="text-right">Corresponding Query</TableHead> */}
+                {/* <TableHead className="text-right">Amount</TableHead> */}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {
+                // Loop through the userViolationCounts object to display the data
+                Object.entries(userViolationCounts).map(([username, count]) => (
+                  <TableRow
+                    key={username}
+                    onClick={() => handleRowClick(username)}
+                    className="cursor-pointer"
+                  >
+                    <TableCell className="font-medium">{username}</TableCell>
+                    <TableCell>{count}</TableCell>
+                    <TableCell className="text-right">
+                      {userTopViolations[username] ? (
+                        <ul>
+                          {Object.entries(userTopViolations[username])
+                            .sort((a, b) => b[1] - a[1])
+                            .slice(0, 5)
+                            .map(([query, count]) => (
+                              <li key={query}>
+                                {query}: {count}
+                              </li>
+                            ))}
+                        </ul>
+                      ) : (
+                        "N/A"
+                      )}
+                    </TableCell>
+                    {/* <TableCell className="text-right">
                     {userTopViolations[username]?.message || "N/A"}
                   </TableCell> */}
-                </TableRow>
-              ))
-            }
-            {/* <TableRow>
+                  </TableRow>
+                ))
+              }
+              {/* <TableRow>
               <TableCell className="font-medium">INV001</TableCell>
               <TableCell>Paid</TableCell>
               <TableCell>Credit Card</TableCell>
@@ -128,16 +129,17 @@ export default function UserWiseAnalytics({ analyticsData }) {
               <TableCell>Credit Card</TableCell>
               <TableCell className="text-right">$250.00</TableCell>
             </TableRow> */}
-          </TableBody>
-        </Table>
+            </TableBody>
+          </Table>
+        </div>{" "}
       </div>
       {selectedUserData && (
-        <div className="mx-4 grid grid-cols-1 xl:grid-cols-2 gap-4  rounded-xl  max-w-screen-3xl  mt-4   ">
-          <div className="col-span-1 rounded-xl  bg-black  shadow-default   sm:px-7.5 xl:col-span-1">
+        <div className="mx-4 grid grid-cols-12 xl:grid-cols-12 gap-4  rounded-xl  max-w-screen-3xl  mt-4   ">
+          <div className="col-span-12 rounded-xl  bg-black  shadow-default   sm:px-7.5 xl:col-span-6">
             <Card className="bg-black text-white border-none">
               <CardHeader>
                 <CardTitle className="text-white">
-                  {`${selectedUserData}'s Violations`}
+                  {`${selectedUserData}'s Violation Categories Counts`}
                 </CardTitle>
                 {/* <CardDescription>
                 This graph shows the counts for the 5 levels of risks that
@@ -195,14 +197,19 @@ export default function UserWiseAnalytics({ analyticsData }) {
                       datalabels: {
                         color: "#ffffff60",
                       },
+                      legend: {
+                        display: false,
+                      },
                     },
+
+                    
                   }}
                 />
               </CardContent>
             </Card>
           </div>
 
-          <div className="col-span-1 rounded-xl  bg-black p-7.5 shadow-default  xl:col-span-1">
+          <div className="col-span-12 rounded-xl  bg-black p-7.5 shadow-default  xl:col-span-6">
             <Card className="bg-black text-white border-none">
               <CardHeader>
                 <CardTitle className="text-white">
@@ -224,7 +231,7 @@ export default function UserWiseAnalytics({ analyticsData }) {
                     datasets: [
                       {
                         //   axis: "y",
-                        label: "Violation Count",
+                        label: "Violation Percentage",
                         data: Object.values(userTopViolations[selectedUserData])
                           .sort((countA, countB) => countB - countA)
                           .slice(0, 5)

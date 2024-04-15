@@ -131,7 +131,11 @@ const RiskBarChart = () => {
       datalabels: {
         color: "#fff",
       },
+      legend:{
+        display: false
+      }
     },
+    
     // scales: {
     //   yAxes: [
     //     {
@@ -155,6 +159,8 @@ const RiskBarChart = () => {
     //   ],
     // },
   };
+
+  
   Chart.register(...registerables);
   return (
     <div className="col-span-12 rounded-xl  bg-black p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">

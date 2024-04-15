@@ -6,7 +6,7 @@ import { Badge } from "../ui/badge";
 
 export default function UserHomePage() {
   return (
-    <div className="grid h-screen w-full pl-[143px] no-scrollbar">
+    <div className="grid h-screen w-full pl-[143px] ">
       <AsideSection
         componentName={"Chat Area"}
         icon={<SquareTerminal className="size-5" />}

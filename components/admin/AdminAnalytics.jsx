@@ -70,7 +70,7 @@ export default function AdminAnalytics() {
 
   return (
     // <main className=" flex-1 flex-col gap-4 justify-center items-center  overflow-auto md:grid-cols-2 p-4 lg:grid-cols-2 border-2 border-primary">
-    <div className="flex w-full">
+    <div className="flex w-full  justify-center items-center ">
       <Tabs defaultValue="daily">
         <TabsList className="top-2 w-fit text-xs sticky">
           <TabsTrigger value="daily">Daily Analytics</TabsTrigger>
@@ -82,9 +82,11 @@ export default function AdminAnalytics() {
         {/* <TabsContent value="six_hrs">
         <SixHourAnalysis analyticsData={analyticsData} />
       </TabsContent> */}
-        <TabsContent value="daily">
-          <DailyAnalytics analyticsData={analyticsData} />
-          <div className={`absolute top-14  right-10 space-x-2 items-center`}>
+        <TabsContent
+          value="daily"
+          className=" h-[calc(100vh-7rem)] p-0 overflow-y-scroll no-scrollbar"
+        >
+          <div className={`absolute top-10  right-10  items-center`}>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
@@ -127,8 +129,12 @@ export default function AdminAnalytics() {
               Set Date
             </Button>
           </div>
+          <DailyAnalytics analyticsData={analyticsData} />
         </TabsContent>
-        <TabsContent value="userwise">
+        <TabsContent
+          value="userwise"
+          className="h-[calc(100vh-7rem)] w-[calc(100vw-11rem)]  overflow-y-scroll no-scrollbar "
+        >
           <UserWiseAnalytics analyticsData={analyticsData} />
           {/* <UserWiseAnalytics /> */}
         </TabsContent>

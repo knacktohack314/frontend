@@ -207,12 +207,9 @@ const AdminJsonGraph = () => {
   return (
     <ResizablePanelGroup
       direction="horizontal"
-      className="min-h-[60vh]  rounded-lg border no-scrollbar"
+      className="min-h-[60vh]  rounded-lg border "
     >
-      <ResizablePanel
-        defaultSize={40}
-        className="bg-black text-black no-scrollbar"
-      >
+      <ResizablePanel defaultSize={40} className="bg-black text-black ">
         {/* json component */}
 
         <div className="h-[86vh] relative flex">
@@ -287,10 +284,7 @@ const AdminJsonGraph = () => {
         </span>
       </span>
       {/* <ResizableHandle withHandle /> */}
-      <ResizablePanel
-        className="bg-black relative  h-[86vh] no-scrollbar"
-        defaultSize={60}
-      >
+      <ResizablePanel className="bg-black relative  h-[86vh]" defaultSize={60}>
         {/* graph component */}
 
         <Suspense
@@ -313,7 +307,7 @@ const AdminJsonGraph = () => {
             </>
           }
         >
-          <div className="relative flex no-scrollbar   items-center justify-center p-5 h-[86vh]">
+          <div className="relative flex   items-center justify-center p-5 h-[86vh]">
             {!graphLoading ? (
               <>
                 <Badge variant="secondary" className="right-2 absolute top-2">
@@ -326,6 +320,7 @@ const AdminJsonGraph = () => {
                   graphData={cachedGraph}
                   // nodeAutoColorBy="id"
                   linkColor="black"
+                  
                   nodeColor={(node) =>
                     node?.risk === "critical"
                       ? "red"
