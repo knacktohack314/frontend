@@ -84,56 +84,55 @@ export default function AdminAnalytics() {
       </TabsContent> */}
         <TabsContent value="daily">
           <DailyAnalytics analyticsData={analyticsData} />
+          <div className={`absolute top-14  right-10 space-x-2 items-center`}>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  id="date"
+                  variant={"outline"}
+                  className={cn(
+                    "w-[300px] justify-start text-left font-normal",
+                    !date && "text-muted-foreground"
+                  )}
+                  value={date}
+                  onClick={(value) => setDate(value)}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {date?.from ? (
+                    date.to ? (
+                      <>
+                        {format(date.from, "LLL dd, y")} -{" "}
+                        {format(date.to, "LLL dd, y")}
+                      </>
+                    ) : (
+                      format(date.from, "LLL dd, y")
+                    )
+                  ) : (
+                    <span>Pick a date range</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  initialFocus
+                  mode="range"
+                  defaultMonth={date?.from}
+                  selected={date}
+                  onSelect={setDate}
+                  numberOfMonths={2}
+                />
+              </PopoverContent>
+            </Popover>
+            <Button className="text-xs space-x-2" onClick={handleSetDateRange}>
+              Set Date
+            </Button>
+          </div>
         </TabsContent>
         <TabsContent value="userwise">
           <UserWiseAnalytics analyticsData={analyticsData} />
           {/* <UserWiseAnalytics /> */}
         </TabsContent>
       </Tabs>
-
-      <div className={`absolute top-14  right-10 space-x-2 items-center`}>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              id="date"
-              variant={"outline"}
-              className={cn(
-                "w-[300px] justify-start text-left font-normal",
-                !date && "text-muted-foreground"
-              )}
-              value={date}
-              onClick={(value) => setDate(value)}
-            >
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {date?.from ? (
-                date.to ? (
-                  <>
-                    {format(date.from, "LLL dd, y")} -{" "}
-                    {format(date.to, "LLL dd, y")}
-                  </>
-                ) : (
-                  format(date.from, "LLL dd, y")
-                )
-              ) : (
-                <span>Pick a date range</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0" align="start">
-            <Calendar
-              initialFocus
-              mode="range"
-              defaultMonth={date?.from}
-              selected={date}
-              onSelect={setDate}
-              numberOfMonths={2}
-            />
-          </PopoverContent>
-        </Popover>
-        <Button className="text-xs space-x-2" onClick={handleSetDateRange}>
-          Set Date
-        </Button>
-      </div>
     </div>
     // </main>
   );

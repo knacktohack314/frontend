@@ -307,7 +307,7 @@ const AdminJsonGraph = () => {
             </>
           }
         >
-          <div className="relative flex   items-center justify-center p-5 h-[86vh]">
+          <div className="relative flex no-scrollbar   items-center justify-center p-5 h-[86vh]">
             {!graphLoading ? (
               <>
                 <Badge variant="secondary" className="right-2 absolute top-2">
@@ -320,7 +320,6 @@ const AdminJsonGraph = () => {
                   graphData={cachedGraph}
                   // nodeAutoColorBy="id"
                   linkColor="black"
-                  
                   nodeColor={(node) =>
                     node?.risk === "critical"
                       ? "red"

@@ -7,7 +7,7 @@ import { Badge } from "../ui/badge";
 
 export default function AdminContent() {
   return (
-    <div className="flex flex-col bg-muted/50 overflow-y-scroll ">
+    <div className="flex flex-col bg-muted/50 overflow-y-scroll no-scrollbar">
       <main className=" flex-1 gap-4 justify-center items-center  overflow-auto md:grid-cols-2 p-4 lg:grid-cols-2 ">
         <Tabs defaultValue="json_graph">
           <TabsList className="flex w-fit mx-auto justify-between sticky top-1">
@@ -18,15 +18,15 @@ export default function AdminContent() {
           </TabsList>
           <TabsContent value="json_graph">
             <div className="relative flex h-full overflow-y-scroll min-h-[50vh] flex-col rounded-xl   lg:col-span-2 gap-3 ">
-               <Suspense
+              <Suspense
                 fallback={<Badge className="animate-pulse">Loading...</Badge>}
               >
-              <AdminRuleBookUpload />
+                <AdminRuleBookUpload />
               </Suspense>
               {/* <Suspense
                 fallback={<Badge className="animate-pulse">Loading...</Badge>}
               > */}
-                <AdminJsonGraph />
+              <AdminJsonGraph />
               {/* </Suspense> */}
             </div>
           </TabsContent>
