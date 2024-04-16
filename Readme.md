@@ -1,4 +1,5 @@
-# Ethicheck.AI Frontend
+# ![favicon-32x32](https://github.com/knacktohack314/frontend/assets/86544278/fd21a786-7ad1-40cb-baf2-4c55029adb08)  Ethicheck.AI  
+
 
 ### Demo at : [Ethicheck.AI](https://ethicheck-ai.vercel.app/)
 
