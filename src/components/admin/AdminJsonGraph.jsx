@@ -171,7 +171,8 @@ const AdminJsonGraph = () => {
 
       toast({
         variant: "destructive",
-        description: "Editing feature is temporarily blocked for safety purposes",
+        description:
+          "Editing feature is temporarily blocked for safety purposes",
       });
 
       // console.log("Json data saved");
@@ -180,7 +181,7 @@ const AdminJsonGraph = () => {
       console.error("Error saving JSON data:", error);
     }
 
-    fetchFreshGraphData();
+    // fetchFreshGraphData();
   };
 
   // const cachedGraph = useMemo(() => graphData, [graphData]);
@@ -232,6 +233,7 @@ const AdminJsonGraph = () => {
               //   // dispatch(setJsonData(output));
               //   // console.log(output);
               // }}
+              editable={false}
               theme={{ color: "#E11D47", hoverColor: "#E11D4719" }}
               valueStyle={myStyle.valueStyle}
               keyStyle={myStyle.keyStyle}
