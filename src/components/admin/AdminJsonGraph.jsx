@@ -168,7 +168,7 @@ const AdminJsonGraph = () => {
       //     },
       //   }
       // );
-
+dispatch(setJsonData(localStorage.getItem("jsonData")))
       toast({
         variant: "destructive",
         description:
@@ -233,7 +233,7 @@ const AdminJsonGraph = () => {
               //   // dispatch(setJsonData(output));
               //   // console.log(output);
               // }}
-              editable={false}
+              // editable={false}
               theme={{ color: "#E11D47", hoverColor: "#E11D4719" }}
               valueStyle={myStyle.valueStyle}
               keyStyle={myStyle.keyStyle}
