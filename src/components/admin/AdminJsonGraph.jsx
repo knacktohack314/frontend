@@ -159,19 +159,19 @@ const AdminJsonGraph = () => {
   const handleSaveJson = async () => {
     // console.log(jsonData);
     try {
-      const response = await axios.post(
-        "/getGraph",
-        { data: JSON.parse(jsonData) },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // const response = await axios.post(
+      //   "/getGraph",
+      //   { data: JSON.parse(jsonData) },
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
 
       toast({
         variant: "destructive",
-        description: response.data,
+        description: "Editing feature is temporarily blocked for safety purposes",
       });
 
       // console.log("Json data saved");
