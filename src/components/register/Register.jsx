@@ -35,7 +35,7 @@ export default function Register() {
       });
 
       await setActive({ session: signUp.createdSessionId });
-      navigate("/home");
+      navigate("/");
     } catch (err) {
       alert(err.errors[0].message);
     } finally {

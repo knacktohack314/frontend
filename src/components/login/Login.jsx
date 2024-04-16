@@ -42,7 +42,7 @@ export default function Login() {
 
       // This indicates the user is signed in
       await setActive({ session: completeSignIn.createdSessionId });
-      navigate("/home");
+      navigate("/");
     } catch (err) {
       alert(err.errors[0].message);
     } finally {
