@@ -28,6 +28,8 @@ import axios from "@/api/axios";
 import { setJsonData } from "../../state/slices/jsonGraphSlice";
 import { Card, CardContent } from "../ui/card";
 
+import { useToast } from "../ui/use-toast";
+
 // import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
 // import CellMeasurer from "react-virtualized/dist/commonjs/CellMeasurer";
 // import CellMeasurerCache from "react-virtualized/dist/commonjs/CellMeasurer/CellMeasurerCache";
@@ -56,6 +58,7 @@ const AdminJsonGraph = () => {
   const jsonData = useSelector((state) => state.jsonGraph.jsonData);
   // const graphData = useSelector((state) => state.jsonGraph.graphData);
 
+  const { toast } = useToast();
   const [graphData, setGraphData] = useState({
     nodes: [],
     links: [],
@@ -154,7 +157,7 @@ const AdminJsonGraph = () => {
   }, [jsonData]);
 
   const handleSaveJson = async () => {
-    console.log(jsonData);
+    // console.log(jsonData);
     try {
       const response = await axios.post(
         "/getGraph",
@@ -165,8 +168,14 @@ const AdminJsonGraph = () => {
           },
         }
       );
-      console.log("Json data saved");
-      localStorage.setItem("jsonData", jsonData);
+
+      toast({
+        variant: "destructive",
+        description: response.data,
+      });
+
+      // console.log("Json data saved");
+      // localStorage.setItem("jsonData", jsonData);
     } catch (error) {
       console.error("Error saving JSON data:", error);
     }
@@ -220,7 +229,7 @@ const AdminJsonGraph = () => {
             <JsonEditor
               jsonObject={jsonData}
               onChange={(output) => {
-                dispatch(setJsonData(output));
+                // dispatch(setJsonData(output));
                 // console.log(output);
               }}
               theme={{ color: "#E11D47", hoverColor: "#E11D4719" }}
