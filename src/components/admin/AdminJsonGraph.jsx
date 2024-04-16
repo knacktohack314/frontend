@@ -228,10 +228,10 @@ const AdminJsonGraph = () => {
           {!jsonLoading ? (
             <JsonEditor
               jsonObject={jsonData}
-              onChange={(output) => {
-                // dispatch(setJsonData(output));
-                // console.log(output);
-              }}
+              // onChange={(output) => {
+              //   // dispatch(setJsonData(output));
+              //   // console.log(output);
+              // }}
               theme={{ color: "#E11D47", hoverColor: "#E11D4719" }}
               valueStyle={myStyle.valueStyle}
               keyStyle={myStyle.keyStyle}
