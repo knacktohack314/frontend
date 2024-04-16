@@ -28,7 +28,11 @@ export default function UserWiseAnalytics({ analyticsData }) {
   const userTopViolations = {};
 
   // Loop through the data to count violations and find top violations
-  analyticsData.forEach((item) => {
+  analyticsData = JSON.parse(localStorage.getItem("analyticsData"))
+    ? JSON.parse(localStorage.getItem("analyticsData"))
+    : analyticsData;
+  console.log(analyticsData);
+  analyticsData?.forEach((item) => {
     const { username, msg } = item;
     const violationCount = Object.keys(item["High level violations"]).length;
 
@@ -63,7 +67,7 @@ export default function UserWiseAnalytics({ analyticsData }) {
   return (
     <main className="no-scrollbar  mx-auto max-w-screen-3xl p-4 md:p-6 2xl:p-4">
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-0 md:gap-6 2xl:mt-7.5 2xl:gap-7.5 max-w-screen-3xl mx-4">
-        <div className=" col-span-12 rounded-xl  bg-black  shadow-default  sm:px-7.5 xl:col-span-12 h-[45vh] overflow-y-scroll   no-scrollbar p-5">
+        <div className=" col-span-12 rounded-xl  bg-black  shadow-default  sm:px-7.5 xl:col-span-12 h-[45vh] overflow-y-scroll   p-5">
           <Table>
             <TableCaption>
               A list of users and the respective violations that they commited
@@ -149,18 +153,22 @@ export default function UserWiseAnalytics({ analyticsData }) {
               <CardContent className="h-72 ">
                 <Bar
                   data={{
-                    labels: Object.entries(userTopViolations[selectedUserData])
-                      .sort(([, countA], [, countB]) => countB - countA)
-                      .slice(0, 5)
-                      .map(([query, count]) => query),
+                    labels: userTopViolations[selectedUserData]
+                      ? Object.entries(userTopViolations[selectedUserData])
+                          .sort(([, countA], [, countB]) => countB - countA)
+                          .slice(0, 5)
+                          .map(([query, count]) => query)
+                      : [],
 
                     datasets: [
                       {
                         //   axis: "y",
                         label: "Violations Done & their Counts",
-                        data: Object.values(userTopViolations[selectedUserData])
-                          .sort((countA, countB) => countB - countA)
-                          .slice(0, 5),
+                        data: userTopViolations[selectedUserData]
+                          ? Object.values(userTopViolations[selectedUserData])
+                              .sort((countA, countB) => countB - countA)
+                              .slice(0, 5)
+                          : [],
                         // 1, 2, 34,
 
                         backgroundColor: [
@@ -221,24 +229,28 @@ export default function UserWiseAnalytics({ analyticsData }) {
               <CardContent className="h-72 ">
                 <Pie
                   data={{
-                    labels: Object.entries(userTopViolations[selectedUserData])
-                      .sort(([, countA], [, countB]) => countB - countA)
-                      .slice(0, 5)
-                      .map(([query, count]) => query),
+                    labels: userTopViolations[selectedUserData]
+                      ? Object.entries(userTopViolations[selectedUserData])
+                          .sort(([, countA], [, countB]) => countB - countA)
+                          .slice(0, 5)
+                          .map(([query, count]) => query)
+                      : [],
 
                     datasets: [
                       {
                         //   axis: "y",
                         label: "Violation Percentage",
-                        data: Object.values(userTopViolations[selectedUserData])
-                          .sort((countA, countB) => countB - countA)
-                          .slice(0, 5)
-                          .map((count) => {
-                            const tot = Object.values(
-                              userTopViolations[selectedUserData]
-                            ).reduce((a, b) => a + b, 0);
-                            return ((count / tot) * 100).toFixed(1);
-                          }),
+                        data: userTopViolations[selectedUserData]
+                          ? Object.values(userTopViolations[selectedUserData])
+                              .sort((countA, countB) => countB - countA)
+                              .slice(0, 5)
+                              .map((count) => {
+                                const tot = Object.values(
+                                  userTopViolations[selectedUserData]
+                                ).reduce((a, b) => a + b, 0);
+                                return ((count / tot) * 100).toFixed(1);
+                              })
+                          : [],
                         // 1, 2, 34,
 
                         backgroundColor: [
