@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     from: (new Date(2024, 3, 2)).toISOString().split("T")[0],
-    to: (new Date(2025, 3, 21)).toISOString().split("T")[0],
+    to: (new Date(2024, 9, 1)).toISOString().split("T")[0],
 };
 
 const dateRangeSlice = createSlice({
