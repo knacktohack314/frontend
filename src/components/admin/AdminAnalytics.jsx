@@ -27,7 +27,8 @@ export default function AdminAnalytics() {
 
   const [date, setDate] = useState({
     from: new Date(2024, 3, 1),
-    to: addDays(new Date(2024, 3, 1), 180),
+    // to: addDays(new Date(2024, 3, 1), 180),
+    to:new Date()
   });
 
   const handleSetDateRange = () => {
