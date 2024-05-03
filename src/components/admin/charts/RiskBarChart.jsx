@@ -28,12 +28,12 @@ const RiskBarChart = () => {
       "Risk Level 2",
       "Risk Level 3",
       "Risk Level 4",
-      "Risk Level 5",
+      // "Risk Level 5",
     ],
     datasets: [
       {
         label: "Risk Count ",
-        data:  [4, 20, 52, 39, 0],
+        data:  [4, 20, 52, 39],
         minBarLength: 5,
         backgroundColor: [
           "#3d9737A0",
@@ -77,7 +77,7 @@ const RiskBarChart = () => {
       // console.log("riskCounts", riskCounts);
 
       // if (riskCounts)
-      for (let i = 1; i <= 5; i++) {
+      for (let i = 1; i <= 4; i++) {
         if (!(i in riskCounts)) {
           riskCounts[i] = 0;
         }
