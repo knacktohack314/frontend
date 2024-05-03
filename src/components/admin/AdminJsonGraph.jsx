@@ -159,29 +159,29 @@ const AdminJsonGraph = () => {
   const handleSaveJson = async () => {
     // console.log(jsonData);
     try {
-      // const response = await axios.post(
-      //   "/getGraph",
-      //   { data: JSON.parse(jsonData) },
-      //   {
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   }
-      // );
-      // dispatch(setJsonData(localStorage.getItem("jsonData")))
-      toast({
-        variant: "destructive",
-        description:
-          "Editing feature is temporarily blocked for safety purposes",
-      });
+      const response = await axios.post(
+        "/getGraph",
+        { data: JSON.parse(jsonData) },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      dispatch(setJsonData(localStorage.getItem("jsonData")))
+      // toast({
+      //   variant: "destructive",
+      //   description:
+      //     "Editing feature is temporarily blocked for safety purposes",
+      // });
 
-      // console.log("Json data saved");
-      // localStorage.setItem("jsonData", jsonData);
+      console.log("Json data saved");
+      localStorage.setItem("jsonData", jsonData);
     } catch (error) {
       console.error("Error saving JSON data:", error);
     }
 
-    // fetchFreshGraphData();
+    fetchFreshGraphData();
   };
 
   // const cachedGraph = useMemo(() => graphData, [graphData]);
