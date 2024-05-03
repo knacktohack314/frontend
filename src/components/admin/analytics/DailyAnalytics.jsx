@@ -147,10 +147,10 @@ export default function DailyAnalytics({ analyticsData }) {
       //     "2024-04-14": 0,
       //   },
         // backgroundColor: ["#b20303"],
-        backgroundColor: ["#b2030380"],
-        borderColor: "#b20303",
-        borderWidth: 2,
-      },
+      //   backgroundColor: ["#b2030380"],
+      //   borderColor: "#b20303",
+      //   borderWidth: 2,
+      // },
     ],
   });
 
