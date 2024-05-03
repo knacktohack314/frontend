@@ -132,20 +132,20 @@ export default function DailyAnalytics({ analyticsData }) {
         borderColor: "#f52505",
         borderWidth: 2,
       },
-      {
-        fill: true,
-        label: "Risk Level5 Counts",
-        data: {
-          "2024-04-05": 0,
-          "2024-04-06": 0,
-          "2024-04-07": 0,
-          "2024-04-08": 0,
-          "2024-04-09": 0,
-          "2024-04-10": 0,
-          "2024-04-12": 0,
-          "2024-04-13": 0,
-          "2024-04-14": 0,
-        },
+      // {
+      //   fill: true,
+      //   label: "Risk Level5 Counts",
+      //   data: {
+      //     "2024-04-05": 0,
+      //     "2024-04-06": 0,
+      //     "2024-04-07": 0,
+      //     "2024-04-08": 0,
+      //     "2024-04-09": 0,
+      //     "2024-04-10": 0,
+      //     "2024-04-12": 0,
+      //     "2024-04-13": 0,
+      //     "2024-04-14": 0,
+      //   },
         // backgroundColor: ["#b20303"],
         backgroundColor: ["#b2030380"],
         borderColor: "#b20303",
@@ -229,7 +229,7 @@ export default function DailyAnalytics({ analyticsData }) {
       const dailyViolationCounts_Risk2 = {};
       const dailyViolationCounts_Risk3 = {};
       const dailyViolationCounts_Risk4 = {};
-      const dailyViolationCounts_Risk5 = {};
+      // const dailyViolationCounts_Risk5 = {};
       // const dailyViolationQueries = {};
 
       // Iterate through the data
@@ -281,12 +281,12 @@ export default function DailyAnalytics({ analyticsData }) {
                 : dailyViolationCounts_Risk4[day] || 0
               : dailyViolationCounts_Risk4[day] || 0;
 
-          dailyViolationCounts_Risk5[day] =
-            Object.keys(entry["High level violations"]).length > 0
-              ? entry.risk == 5
-                ? (dailyViolationCounts_Risk5[day] || 0) + 1
-                : dailyViolationCounts_Risk5[day] || 0
-              : dailyViolationCounts_Risk5[day] || 0;
+          // dailyViolationCounts_Risk5[day] =
+          //   Object.keys(entry["High level violations"]).length > 0
+          //     ? entry.risk == 5
+          //       ? (dailyViolationCounts_Risk5[day] || 0) + 1
+          //       : dailyViolationCounts_Risk5[day] || 0
+          //     : dailyViolationCounts_Risk5[day] || 0;
 
           // Object.entries(entry["High level violations"]).forEach(([query, messages]) => {
           //   //write code  for the days store the query and its count
@@ -328,7 +328,7 @@ export default function DailyAnalytics({ analyticsData }) {
       const riskArray2 = Object.entries(dailyViolationCounts_Risk2);
       const riskArray3 = Object.entries(dailyViolationCounts_Risk3);
       const riskArray4 = Object.entries(dailyViolationCounts_Risk4);
-      const riskArray5 = Object.entries(dailyViolationCounts_Risk5);
+      // const riskArray5 = Object.entries(dailyViolationCounts_Risk5);
 
       // Sort the array based on keys (dates)
       function compare(riskArray) {
@@ -343,7 +343,7 @@ export default function DailyAnalytics({ analyticsData }) {
       const risk2 = {};
       const risk3 = {};
       const risk4 = {};
-      const risk5 = {};
+      // const risk5 = {};
 
       compare(riskArray1).forEach(([key, value]) => {
         risk1[key] = value;
@@ -360,21 +360,21 @@ export default function DailyAnalytics({ analyticsData }) {
       compare(riskArray4).forEach(([key, value]) => {
         risk4[key] = value;
       });
-      compare(riskArray5).forEach(([key, value]) => {
-        risk5[key] = value;
-      });
+      // compare(riskArray5).forEach(([key, value]) => {
+      //   risk5[key] = value;
+      // });
 
       console.log("risk1 ", risk1);
       console.log("risk2 ", risk2);
       console.log("risk2 ", risk3);
       console.log("risk2 ", risk4);
-      console.log("risk2 ", risk5);
+      // console.log("risk2 ", risk5);
       return {
         risk1,
         risk2,
         risk3,
         risk4,
-        risk5,
+        // risk5,
         // dailyViolationQueries,
       };
     };
@@ -385,7 +385,7 @@ export default function DailyAnalytics({ analyticsData }) {
       risk2,
       risk3,
       risk4,
-      risk5,
+      // risk5,
       // dailyViolationQueries,
     } = getDailyViolationCounts();
 
@@ -401,7 +401,7 @@ export default function DailyAnalytics({ analyticsData }) {
     const dataPoints_Risk2 = Object.values(risk2);
     const dataPoints_Risk3 = Object.values(risk3);
     const dataPoints_Risk4 = Object.values(risk4);
-    const dataPoints_Risk5 = Object.values(risk5);
+    // const dataPoints_Risk5 = Object.values(risk5);
 
     // console.log(dataPoints);
     // setCompDates([...new Set(compdates)]);
@@ -445,15 +445,15 @@ export default function DailyAnalytics({ analyticsData }) {
           borderColor: "#f52505",
           borderWidth: 2,
         },
-        {
-          fill: true,
-          label: "Risk Level5 Counts",
-          data: dataPoints_Risk5,
-          // backgroundColor: ["#b20303"],
-          backgroundColor: ["#b2030380"],
-          borderColor: "#b20303",
-          borderWidth: 2,
-        },
+        // {
+        //   fill: true,
+        //   label: "Risk Level5 Counts",
+        //   data: dataPoints_Risk5,
+        //   // backgroundColor: ["#b20303"],
+        //   backgroundColor: ["#b2030380"],
+        //   borderColor: "#b20303",
+        //   borderWidth: 2,
+        // },
       ],
     });
 
